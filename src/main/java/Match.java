@@ -1,7 +1,7 @@
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-public class Match {
+class Match {
 
     private final String homeTeamName;
 
@@ -19,24 +19,16 @@ public class Match {
         this.lastUpdate = LocalDateTime.now();
     }
 
-    public int getHomeTeamScore() {
-        return homeTeamScore;
-    }
-
-    public int getAwayTeamScore() {
-        return awayTeamScore;
+    public int getSumScore() {
+        return homeTeamScore + awayTeamScore;
     }
 
     public LocalDateTime getLastUpdate() {
         return lastUpdate;
     }
 
-    public void setHomeTeamScore(int homeTeamScore) {
+    public void updateScores(int homeTeamScore, int awayTeamScore) {
         this.homeTeamScore = homeTeamScore;
-        lastUpdate = LocalDateTime.now();
-    }
-
-    public void setAwayTeamScore(int awayTeamScore) {
         this.awayTeamScore = awayTeamScore;
         lastUpdate = LocalDateTime.now();
     }

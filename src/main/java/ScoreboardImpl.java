@@ -1,10 +1,9 @@
 import java.util.Collection;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.TreeSet;
+import java.util.stream.Collectors;
 
-public class Board {
+public class ScoreboardImpl implements Scoreboard {
 
     private final Map<String, Match> matches = new HashMap<>();
 
@@ -19,14 +18,15 @@ public class Board {
 
     public void updateScore(String homeTeamName, String awayTeamName, int homeTeamScore, int awayTeamScore) {
         final Match match = matches.get(getKey(homeTeamName, awayTeamName));
-        match.setHomeTeamScore(homeTeamScore);
-        match.setAwayTeamScore(awayTeamScore);
+        match.updateScores(homeTeamScore, awayTeamScore);
     }
 
-    public Collection<Match> getSummary(Comparator<Match> comparator) {
-        final TreeSet<Match> matches = new TreeSet<>(comparator);
-        matches.addAll(this.matches.values());
-        return matches.descendingSet();
+    public Collection<String> getSummary() {
+        return matches.values()
+                .stream()
+                .sorted(new MatchCustomComparator().reversed())
+                .map(Match::toString)
+                .collect(Collectors.toList());
     }
 
     private String getKey(String homeTeamName, String awayTeamName) {
