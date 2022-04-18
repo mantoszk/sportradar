@@ -21,19 +21,19 @@ public class BoardTest {
         //in matches being updated at the same time
         final Board board = new Board();
         board.startMatch("Mexico","Canada");
-        board.updateScore(new Team("Mexico",0), new Team("Canada", 5));
+        board.updateScore("Mexico","Canada", 0,5);
         Thread.sleep(1);
         board.startMatch("Spain","Brazil");
-        board.updateScore(new Team("Spain",10), new Team("Brazil", 2));
+        board.updateScore("Spain","Brazil", 10,2);
         Thread.sleep(1);
         board.startMatch("Germany","France");
-        board.updateScore(new Team("Germany",2), new Team("France", 2));
+        board.updateScore("Germany","France", 2,2);
         Thread.sleep(1);
         board.startMatch("Uruguay","Italy");
-        board.updateScore(new Team("Uruguay",6), new Team("Italy", 6));
+        board.updateScore("Uruguay","Italy", 6,6);
         Thread.sleep(1);
         board.startMatch("Argentina","Australia");
-        board.updateScore(new Team("Argentina",3), new Team("Australia", 1));
+        board.updateScore("Argentina","Australia", 3,1);
 
         //WHEN: getSummary from Board with GIVEN data in correct order
         final Collection<Match> actual = board.getSummary(new MatchCustomComparator());
@@ -64,7 +64,7 @@ public class BoardTest {
     }
 
     @Test
-    void shouldFinishMatch() {
+    void shouldReturnEmptySummaryWhenMatchIsFinished() {
         //GIVEN: scoreboard:
         //Spain-Portugal 0:0
         final Board board = new Board();

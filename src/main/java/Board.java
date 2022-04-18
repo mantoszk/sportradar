@@ -8,19 +8,19 @@ public class Board {
 
     private final Map<String, Match> matches = new HashMap<>();
 
-    public void startMatch(String homeTeam, String awayTeam) {
-        final Match match = new Match(homeTeam, awayTeam);
-        matches.put(getKey(homeTeam, awayTeam), match);
+    public void startMatch(String homeTeamName, String awayTeamName) {
+        final Match match = new Match(homeTeamName, awayTeamName);
+        matches.put(getKey(homeTeamName, awayTeamName), match);
     }
 
-    public void finishMatch(String homeTeam, String awayTeam) {
-        matches.remove(getKey(homeTeam, awayTeam));
+    public void finishMatch(String homeTeamName, String awayTeamName) {
+        matches.remove(getKey(homeTeamName, awayTeamName));
     }
 
-    public void updateScore(Team home, Team away) {
-        final Match match = matches.get(getKey(home.getName(), away.getName()));
-        match.setHomeTeamScore(home.getScore());
-        match.setAwayTeamScore(away.getScore());
+    public void updateScore(String homeTeamName, String awayTeamName, int homeTeamScore, int awayTeamScore) {
+        final Match match = matches.get(getKey(homeTeamName, awayTeamName));
+        match.setHomeTeamScore(homeTeamScore);
+        match.setAwayTeamScore(awayTeamScore);
     }
 
     public Collection<Match> getSummary(Comparator<Match> comparator) {
@@ -29,7 +29,7 @@ public class Board {
         return matches.descendingSet();
     }
 
-    private String getKey(String homeTeam, String awayTeam) {
-        return homeTeam + awayTeam;
+    private String getKey(String homeTeamName, String awayTeamName) {
+        return homeTeamName + awayTeamName;
     }
 }

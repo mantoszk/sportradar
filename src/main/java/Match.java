@@ -2,35 +2,42 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class Match {
-    private final Team home;
-    private final Team away;
+
+    private final String homeTeamName;
+
+    private final String awayTeamName;
+
+    private int homeTeamScore;
+
+    private int awayTeamScore;
+
     private LocalDateTime lastUpdate;
 
-    public Match(String home, String away) {
-        this.home = new Team(home);
-        this.away = new Team(away);
+    public Match(String homeTeamName, String awayTeamName) {
+        this.homeTeamName = homeTeamName;
+        this.awayTeamName = awayTeamName;
         this.lastUpdate = LocalDateTime.now();
     }
 
     public int getHomeTeamScore() {
-        return home.getScore();
+        return homeTeamScore;
     }
 
     public int getAwayTeamScore() {
-        return away.getScore();
+        return awayTeamScore;
     }
 
     public LocalDateTime getLastUpdate() {
         return lastUpdate;
     }
 
-    public void setHomeTeamScore(int score) {
-        home.setScore(score);
+    public void setHomeTeamScore(int homeTeamScore) {
+        this.homeTeamScore = homeTeamScore;
         lastUpdate = LocalDateTime.now();
     }
 
-    public void setAwayTeamScore(int score) {
-        away.setScore(score);
+    public void setAwayTeamScore(int awayTeamScore) {
+        this.awayTeamScore = awayTeamScore;
         lastUpdate = LocalDateTime.now();
     }
 
@@ -39,16 +46,17 @@ public class Match {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Match match = (Match) o;
-        return home.equals(match.home) && away.equals(match.away);
+        return homeTeamScore == match.homeTeamScore && awayTeamScore == match.awayTeamScore
+                && homeTeamName.equals(match.homeTeamName) && awayTeamName.equals(match.awayTeamName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(home, away);
+        return Objects.hash(homeTeamName, awayTeamName, homeTeamScore, awayTeamScore);
     }
 
     @Override
     public String toString() {
-        return String.format("%s - %s", home, away);
+        return String.format("%s %d - %s %d", homeTeamName, homeTeamScore, awayTeamName, awayTeamScore);
     }
 }
